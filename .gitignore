@@ -135,6 +135,8 @@ celerybeat.pid
 *.sage.py
 
 # Environments
+.dog_cat_vnev
+dog_cat_vnev
 .env
 .envrc
 .venv
