@@ -1,1 +1,1 @@
-# cnn classifier
+# cnn classifier for dog cat classification
