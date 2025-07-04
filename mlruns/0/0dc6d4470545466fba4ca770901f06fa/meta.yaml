@@ -1,0 +1,15 @@
+artifact_uri: file:///E:/ML_OPS/Dog-Cat_Classification/Dog_Cat_Classification_With_MLOPS/mlruns/0/0dc6d4470545466fba4ca770901f06fa/artifacts
+end_time: 1751607727793
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+run_id: 0dc6d4470545466fba4ca770901f06fa
+run_name: defiant-ram-624
+run_uuid: 0dc6d4470545466fba4ca770901f06fa
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1751607710220
+status: 3
+tags: []
+user_id: nareshkumarreddy

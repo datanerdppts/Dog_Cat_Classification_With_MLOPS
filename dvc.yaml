@@ -1,0 +1,51 @@
+phases:
+  data_ingestion:
+    cmd: python src\cnnClassifier\pipeline\data_ingestion_pipeline.py
+    deps: 
+      - python src\cnnClassifier\pipeline\data_ingestion_pipeline.py
+      - config\config.yaml
+    output:
+      - Artifacts/data_ingestion/animals
+
+  prepair_basemodel:
+    cmd: src\cnnClassifier\pipeline\prepair_basemodel_pipeline.py
+    deps:
+      - src\cnnClassifier\pipeline\prepair_basemodel_pipeline.py
+      - config\config.yaml
+    params:
+      - IMAGE_SIZE
+      - INCLUDE_TOP
+      - CLASSES
+      - WEIGHTS
+      - LEARNING_RATE
+    output:
+      - Artifacts/base_model
+
+  model_training:
+    cmd: src\cnnClassifier\pipeline\model_training_pipeline.py
+    deps:
+      - src\cnnClassifier\pipeline\model_training_pipeline.py
+      - config/config.yaml
+      - artifacts/data_ingestion/animals
+      - artifacts/prepare_base_model
+
+    params:
+      - IMAGE_SIZE
+      - EPOCHS
+      - BATCH_SIZE
+      - AUGMENTATION
+    output:
+      - artifacts/training/model.h5
+
+  model_evolution:
+    cmd: src\cnnClassifier\pipeline\evolute_model_pipeline_mlflow.py
+    deps:
+      - src\cnnClassifier\pipeline\evolute_model_pipeline_mlflow.py
+      - artifacts/training/model.h5
+      - artifacts/data_ingestion/animals
+      - config/config.yaml
+    outputs:
+      - scores.json:
+          cache: false
+
+

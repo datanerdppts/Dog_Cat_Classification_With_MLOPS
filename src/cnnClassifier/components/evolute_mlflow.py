@@ -54,6 +54,12 @@ class Evaluation:
 
     
     def log_into_mlflow(self):
+
+        dagshub.init(
+        repo_owner='datanerdppts', 
+        repo_name='Dog_Cat_Classification_With_MLOPS', 
+        mlflow=True
+    )
         mlflow.set_registry_uri(self.config.mlflow_uri)
         tracking_url_type_store = urlparse(mlflow.get_tracking_uri()).scheme
 
@@ -72,3 +78,38 @@ class Evaluation:
                 mlflow.keras.log_model(self.model, "model", registered_model_name="VGG16Model")
             else:
                 mlflow.keras.log_model(self.model, "model")
+
+
+
+
+
+
+# import dagshub
+# dagshub.init(repo_owner='datanerdppts', repo_name='Dog_Cat_Classification_With_MLOPS', mlflow=True)
+
+# import mlflow
+# with mlflow.start_run():
+#   mlflow.log_param('parameter name', 'value')
+#   mlflow.log_metric('metric name', 1)
+
+
+
+#   8813d33483814238d0b2f24b7f9ee7b591c16a11
+#   https://dagshub.com/datanerdppts/Dog_Cat_Classification_With_MLOPS.mlflow
+
+
+
+
+# export MLFLOW_TRACKING_URI=https://dagshub.com/datanerdppts/Dog_Cat_Classification_With_MLOPS.mlflow
+
+# export MLFLOW_TRACKING_USERNAME=datanerdppts 
+
+# export MLFLOW_TRACKING_PASSWORD=8813d33483814238d0b2f24b7f9ee7b591c16a11
+
+
+
+
+# set MLFLOW_TRACKING_URI=https://dagshub.com/datanerdppts/Dog_Cat_Classification_With_MLOPS.mlflow
+# set MLFLOW_TRACKING_USERNAME=datanerdppts
+# set MLFLOW_TRACKING_PASSWORD=8813d33483814238d0b2f24b7f9ee7b591c16a11
+
