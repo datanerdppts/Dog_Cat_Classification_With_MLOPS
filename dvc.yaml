@@ -1,51 +1,49 @@
-phases:
+
+stages:
   data_ingestion:
-    cmd: python src\cnnClassifier\pipeline\data_ingestion_pipeline.py
+    cmd: python src/cnnClassifier/pipeline/data_ingestion_pipeline.py
     deps: 
-      - python src\cnnClassifier\pipeline\data_ingestion_pipeline.py
-      - config\config.yaml
-    output:
+      - src/cnnClassifier/pipeline/data_ingestion_pipeline.py
+      - config/config.yaml
+    outs:
       - Artifacts/data_ingestion/animals
 
-  prepair_basemodel:
-    cmd: src\cnnClassifier\pipeline\prepair_basemodel_pipeline.py
+  prepare_basemodel:
+    cmd: python src/cnnClassifier/pipeline/prepair_basemodel_pipeline.py
     deps:
-      - src\cnnClassifier\pipeline\prepair_basemodel_pipeline.py
-      - config\config.yaml
+      - src/cnnClassifier/pipeline/prepair_basemodel_pipeline.py
+      - config/config.yaml
     params:
       - IMAGE_SIZE
       - INCLUDE_TOP
       - CLASSES
       - WEIGHTS
       - LEARNING_RATE
-    output:
-      - Artifacts/base_model
+    outs:
+      - Artifacts/prepare_base_model
 
   model_training:
-    cmd: src\cnnClassifier\pipeline\model_training_pipeline.py
+    cmd: python src/cnnClassifier/pipeline/model_training_pipeline.py
     deps:
-      - src\cnnClassifier\pipeline\model_training_pipeline.py
+      - src/cnnClassifier/pipeline/model_training_pipeline.py
       - config/config.yaml
-      - artifacts/data_ingestion/animals
-      - artifacts/prepare_base_model
-
+      - Artifacts/data_ingestion/animals
+      - Artifacts/prepare_base_model
     params:
       - IMAGE_SIZE
       - EPOCHS
       - BATCH_SIZE
       - AUGMENTATION
-    output:
-      - artifacts/training/model.h5
+    outs:
+      - Artifacts/training/model.h5
 
-  model_evolution:
-    cmd: src\cnnClassifier\pipeline\evolute_model_pipeline_mlflow.py
+  model_evaluation:
+    cmd: python src/cnnClassifier/pipeline/evolute_model_pipeline_mlflow.py
     deps:
-      - src\cnnClassifier\pipeline\evolute_model_pipeline_mlflow.py
-      - artifacts/training/model.h5
-      - artifacts/data_ingestion/animals
+      - src/cnnClassifier/pipeline/evolute_model_pipeline_mlflow.py
+      - Artifacts/training/model.h5
+      - Artifacts/data_ingestion/animals
       - config/config.yaml
-    outputs:
+    outs:
       - scores.json:
           cache: false
-
-
